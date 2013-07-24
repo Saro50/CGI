@@ -11,7 +11,7 @@ MYLIBS = -L"D:/WN/apache_htdocs/cgi/src"
 
 CGICCFLAGS = -I"D:/WN/cgicc_3_2_10"
 
-SOURCE = upload.cpp ../src/HttpHandle.cpp
+SOURCE = upload.cpp ../src/HttpHandle.cpp ../src/HtmlHelper.cpp
 
 LINKOBJ = $(SOURCE:%.cpp=%.o)
 

@@ -8,37 +8,78 @@
 #include <stdlib.h>
 #include <map>
 #include <string>
+#include <ctime>
 #include "../includes/Cookie.h"
 #include "../includes/HttpHandle.h"
+#include "../includes/HtmlHelper.h"
 
 #include <utility>
 
 using namespace std;
 
-const string ENV[ 25 ] = {                 
-        "COMSPEC", "DOCUMENT_ROOT", "GATEWAY_INTERFACE",   
+// const int EVN_COUNTER(28);
+const string ENV[] = {  
+        "upload_file",               
+        "COMSPEC", "DOCUMENT_ROOT", "GATEWAY_INTERFACE",  
         "HTTP_ACCEPT", "HTTP_ACCEPT_ENCODING","HTTP_COOKIE",             
         "HTTP_ACCEPT_LANGUAGE", "HTTP_CONNECTION",         
         "HTTP_HOST", "HTTP_USER_AGENT", "PATH",            
         "QUERY_STRING", "REMOTE_ADDR", "REMOTE_PORT",      
         "REQUEST_METHOD", "REQUEST_URI", "SCRIPT_FILENAME",
         "SCRIPT_NAME", "SERVER_ADDR", "SERVER_ADMIN",      
-        "SERVER_NAME","SERVER_PORT","SERVER_PROTOCOL",     
+        "SERVER_NAME","SERVER_PORT","SERVER_PROTOCOL", 
+        "CONTENT_TYPE",
+        "CONTENT_LENGTH",    
         "SERVER_SIGNATURE","SERVER_SOFTWARE" };  
 
-  
+ const int EVN_COUNTER = sizeof(ENV)/sizeof(string);
 
 int main (int argc, char *argv[])
 {
+  /* 
+    @convert upload file to Binary 
+
+      _setmode(_fileno(stdin), _O_BINARY);
+  
+    @read from stream
+
+      std::cin.read(buf, len);
+
+    @convert file mode to text
+
+      _setmode(_fileno(stdin), _O_TEXT);
+
+
+    @CONTENT_LENGTH只对application/x-www-form-urlencoded类型数据起作用，如果要读上传的文件数据应该是
+
+      string buf;
+      cin.unsetf( ios::skipws );
+      while ( cin )
+      {
+      cin >> c;
+      buf += c;
+      }
+      
+    */
+
 	si::HttpHandle response("ajax");
   si::Cookie c1("name"),c2("VALE","Name2","VSSSS");
+  time_t currentTime;
+  time(&currentTime);
   c1.Name = "Name1";
   c1.Value = "WNasd";
   c1.Path = "/";
   response.addCookie(c1);
   response.addCookie(c2);
-
 	 response.send();
+   /*
+     @atoi convert char into int ;
+   */
+   int contentLength = atoi( getenv( "CONTENT_LENGTH" ) );
+   char postString[1024] = "";
+   std::cin.read( postString , contentLength);
+   std::string dataString(postString);
+   std::string getNowTime = asctime( localtime( &currentTime ) );
    cout << "<html>\n";
    cout << "<head>\n";
    cout << "<title>title</title>\n";
@@ -48,9 +89,11 @@ int main (int argc, char *argv[])
    cout << response.getTag();
    cout << "中文测试";
    cout << "<h1>" << "中文测试"<< "</h1>";
+   cout << "<h2>" <<postString << "</h2>";
+   cout << "<h3>" << getNowTime << "</h3>";
    cout << "<table border = \"0\" cellspacing = \"2\">";
-
-   for ( int i = 0; i < 25; i++ )
+//eest for check outconst int EVN_COUNTER(EVN_COUNTER);
+   for ( int i = 0; i < EVN_COUNTER; i++ )
    {
        cout << "<tr><td>" << ENV[ i ] << "</td><td>";
        // attempt to retrieve value of environment variable
@@ -65,6 +108,5 @@ int main (int argc, char *argv[])
    cout << "</table>\n";
    cout << "</body>\n";
    cout << "</html>\n";
-   
    return 0;
 }

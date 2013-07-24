@@ -6,17 +6,19 @@
 #ifndef _SI_HTMLHELPER_
 #define _SI_HTMLHELPER_
 #include "si_base.h"
+#include "iostream"
+#include "string"
+
+typedef std::string str;
 
 namespace si{
 	class HtmlHelper:si::si_base
 	{
 	public:
-		HtmlHelper();
+		HtmlHelper(str& n):si::si_base(n){};
+		void printTag(str&,str&);
 		~HtmlHelper(){};
-
 	private:
-
-		/* data */
 	};
 
 }

@@ -19,7 +19,6 @@ typedef si::Cookie C;
 namespace si{
 	class HttpHandle:public si::si_base
 	{
-		
 	public:
 		HttpHandle(str n):si::si_base(n){
 			date = "Date:;\nContent-type:text/html;";
@@ -27,7 +26,6 @@ namespace si{
 		enum status { Nomal };
 		void send();
 		void delCookie(str&);
-
 		c_mapper::iterator addCookie(C);
 		c_mapper::iterator getCookie(str&);
 		void clearCookie();
