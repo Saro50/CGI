@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <map>
+#include <fstream>
 #include <string>
 #include <ctime>
 #include "../includes/Cookie.h"
@@ -32,7 +33,11 @@ const string ENV[] = {
         "CONTENT_LENGTH",    
         "SERVER_SIGNATURE","SERVER_SOFTWARE" };  
 
- const int EVN_COUNTER = sizeof(ENV)/sizeof(string);
+const int EVN_COUNTER = sizeof(ENV)/sizeof(string);
+
+#define BUFFSIZE 16*1024 
+
+char szBuff[BUFFSIZE];
 
 int main (int argc, char *argv[])
 {
@@ -66,18 +71,42 @@ int main (int argc, char *argv[])
   si::Cookie c1("name"),c2("VALE","Name2","VSSSS");
   time_t currentTime;
   time(&currentTime);
+
   c1.Name = "Name1";
   c1.Value = "WNasd";
   c1.Path = "/";
   response.addCookie(c1);
   response.addCookie(c2);
-	 response.send();
+	response.send();
    /*
      @atoi convert char into int ;
    */
    int contentLength = atoi( getenv( "CONTENT_LENGTH" ) );
-   char postString[1024] = "";
-   std::cin.read( postString , contentLength);
+   char postString[4096] = "";
+
+   // string buf;
+    // _setmode( _fileno( stdin ), _O_BINARY ); 
+
+    // std::cin.read(buf, contentLength);
+
+     // if(fgets(szBuff, sizeof(szBuff), std::cin ){
+     //  cout << szBuff
+     // }
+
+    string buf;
+
+    string tmp;
+
+    // cin.unsetf( ios::skipws );
+    while ( cin )
+    {
+      std::cin >> tmp;
+      buf += tmp;
+    }
+
+    // _setmode(_fileno(stdin), _O_TEXT);
+     std::cin.read( postString , contentLength);
+   // std::cin.fread();
    std::string dataString(postString);
    std::string getNowTime = asctime( localtime( &currentTime ) );
    cout << "<html>\n";
@@ -89,8 +118,9 @@ int main (int argc, char *argv[])
    cout << response.getTag();
    cout << "中文测试";
    cout << "<h1>" << "中文测试"<< "</h1>";
-   cout << "<h2>" <<postString << "</h2>";
+   cout <<"<h2 >" << postString <<"</h2>";
    cout << "<h3>" << getNowTime << "</h3>";
+   cout << "<h4 style='background:#f1f1f1;border:1px solid #ccc;' >" << buf << "</h4>";
    cout << "<table border = \"0\" cellspacing = \"2\">";
 //eest for check outconst int EVN_COUNTER(EVN_COUNTER);
    for ( int i = 0; i < EVN_COUNTER; i++ )
