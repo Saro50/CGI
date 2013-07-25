@@ -1,9 +1,14 @@
 C++ CGI lib
 =============
 
+* 简介
+
 ** [AUTHOR:] --	'Wn'
+
 ** [EMAIL:] --	'tharbad50@gmail.com'
+
 ** [DATE:] --	'2013-7-25'
+
 ** [DESCRIPTION:] --	 '一个简单的CGI库,练手项目'
            
 
