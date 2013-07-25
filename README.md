@@ -1,21 +1,19 @@
-#+TITLE:     C++ CGI lib
-#+AUTHOR:    Wn
-#+EMAIL:     tharbad50@gmail.com
-#+DATE:      2013-7-25
-#+DESCRIPTION: 一个简单的CGI库,练手项目
-#+KEYWORDS: 
-#+LANGUAGE:  cn
+C++ CGI lib
+----
 
- | Status:   | Under Development                 |
- | Location: | [[https://github.com/Saro50/CGI]] |
+>+AUTHOR:    Wn
+>+EMAIL:     tharbad50@gmail.com
+>+DATE:      2013-7-25
+>+DESCRIPTION: 一个简单的CGI库,练手项目
+>+LANGUAGE:  cn
+           
 
-* 描述
+@ 描述
 
 	暂时考虑从http协议，cookie管理，html文档输出这三个方面来实现库。另会附着利用已完成类实现简单实用组件,作为Demo。
 
-* 历史
 
-** pre:
+** 最先的工作:
 
    - si_base类，基础类，cookie与httpHanlde 类将继承此类,此类作用是使得每个子类保有一个基础名称以识别和方便处理每个子类。
 
